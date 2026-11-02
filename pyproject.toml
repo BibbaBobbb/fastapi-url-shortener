@@ -1,19 +1,9 @@
 [project]
 name = "fastapi-url-shortener"
 version = "0.1.0"
-description = "FASTApi URL shortener"
+description = "FastAPI URL Shortener"
 readme = "README.md"
-authors = [
-    { name = "Esther", email = "ctroika95@gmail.com" }
-]
-requires-python = ">=3.14"
+requires-python = ">=3.13"
 dependencies = [
-    "fastapi[standard]>=0.142.2",
+    "fastapi[standard]>=0.115.10",
 ]
-
-[project.scripts]
-fastapi-url-shortener = "fastapi_url_shortener:main"
-
-[build-system]
-requires = ["uv_build>=0.12.19,<0.13.0"]
-build-backend = "uv_build"

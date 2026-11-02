@@ -1,17 +1,18 @@
-# FASTApi URL shortener
+# FastAPI URL Shortener
+
 ## Develop
-### Setup:
 
+### Setup
 
-Right click `url-shortener` -→ Mark Directory as -→ Sources Root
-
+Right click `url-shortener` -> Mark Directory as -> Sources Root
 
 ### Run
 
 Go to workdir:
 ```shell
-cd irl-shortener
+cd url-shortener
 ```
+
 Run dev server:
 ```shell
 fastapi dev
