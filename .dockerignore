@@ -1,0 +1,10 @@
+.git
+.idea
+.venv
+**/__pycache__
+**/*.pyc
+url-shortener/short-urls.json
+Dockerfile
+.dockerignore
+data
+docker-compose.yml

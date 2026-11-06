@@ -1,0 +1,26 @@
+FROM python:3.13-slim
+
+# uv для установки зависимостей по uv.lock
+COPY --from=ghcr.io/astral-sh/uv:0.8.17 /uv /uvx /bin/
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    UV_COMPILE_BYTECODE=1 \
+    UV_LINK_MODE=copy \
+    UV_PROJECT_ENVIRONMENT=/opt/venv \
+    PATH="/opt/venv/bin:$PATH"
+
+WORKDIR /app
+
+# Сначала только зависимости — для кэширования слоёв
+COPY pyproject.toml uv.lock ./
+RUN uv sync --frozen --no-dev --no-install-project
+
+# Код приложения
+COPY url-shortener ./url-shortener
+
+WORKDIR /app/url-shortener
+
+EXPOSE 8000
+
+CMD ["fastapi", "run", "main.py", "--host", "0.0.0.0", "--port", "8000"]

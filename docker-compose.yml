@@ -1,0 +1,13 @@
+services:
+  app:
+    build: .
+    image: url-shortener
+    container_name: url-shortener
+    ports:
+      - "8000:8000"
+    environment:
+      SHORT_URLS_STORAGE_FILEPATH: /data/short-urls.json
+    volumes:
+      # Хранилище коротких ссылок сохраняется на хосте в ./data/short-urls.json
+      - ./data:/data
+    restart: unless-stopped
