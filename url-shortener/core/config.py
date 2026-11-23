@@ -12,7 +12,8 @@ SHORT_URLS_STORAGE_FILEPATH = Path(
     )
 )
 
-LOG_LEVEL = logging.INFO
+LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO").upper()
 LOG_FORMAT: str = (
     "[%(asctime)s.%(msecs)03d] %(module)10s:%(lineno)-3d %(levelname)-7s - %(message)s"
 )
+LOG_DATE_FORMAT = "%Y-%m-%d %H:%M:%S"

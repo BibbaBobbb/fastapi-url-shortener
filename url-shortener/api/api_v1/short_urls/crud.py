@@ -44,7 +44,7 @@ class ShortUrlsStorage(BaseModel):
             data = ShortUrlsStorage.from_state()
         except ValidationError:
             self.save_state()
-            log.warning("Rewritten storage file due to validation error.")
+            log.info("Recovered data from storage file.")
             return
 
         # мы обновляем свойство напрямую
@@ -92,6 +92,7 @@ class ShortUrlsStorage(BaseModel):
     ) -> ShortUrl:
         for field_name, value in short_url_in:
             setattr(short_url, field_name, value)
+        log.info("Updated short url %r", short_url.slug)
         return short_url
 
     def update_partial(
@@ -101,6 +102,7 @@ class ShortUrlsStorage(BaseModel):
     ):
         for field_name, value in short_url_in.model_dump(exclude_unset=True).items():
             setattr(short_url, field_name, value)
+        log.info("Updated short url %r", short_url.slug)
         return short_url
 
 
