@@ -37,7 +37,9 @@ def read_short_urls_list() -> list[ShortUrl]:
 def create_short_url(
     short_url_create: ShortUrlCreate,
 ) -> ShortUrl:
-    if storage.get_by_slug(short_url_create.slug):
+    if short_url_create.slug is None:
+        short_url_create.slug = storage.generate_unique_slug()
+    elif storage.get_by_slug(short_url_create.slug):
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
             detail=f"Short URL with slug {short_url_create.slug!r} already exists",

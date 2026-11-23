@@ -21,10 +21,13 @@ class ShortUrlCreate(ShortUrlBase):
     """
 
     # noinspection PyTypeHints
-    slug: Annotated[
-        str,
-        Len(min_length=3, max_length=10),
-    ]
+    slug: (
+        Annotated[
+            str,
+            Len(min_length=3, max_length=10),
+        ]
+        | None
+    ) = None
 
 
 class ShortUrlUpdate(ShortUrlBase):

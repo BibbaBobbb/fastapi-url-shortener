@@ -6,6 +6,8 @@ Delete
 """
 
 import logging
+import secrets
+import string
 
 from pydantic import BaseModel, ValidationError
 
@@ -18,6 +20,9 @@ from schemas.short_url import (
 )
 
 log = logging.getLogger(__name__)
+
+SLUG_ALPHABET = string.ascii_letters + string.digits
+SLUG_LENGTH = 6
 
 
 class ShortUrlsStorage(BaseModel):
@@ -59,6 +64,12 @@ class ShortUrlsStorage(BaseModel):
     def increment_visits(self, short_url: ShortUrl) -> None:
         short_url.visits += 1
         log.info("Short url %r visited %d times", short_url.slug, short_url.visits)
+
+    def generate_unique_slug(self) -> str:
+        while True:
+            slug = "".join(secrets.choice(SLUG_ALPHABET) for _ in range(SLUG_LENGTH))
+            if slug not in self.slug_to_short_url:
+                return slug
 
     def create(self, short_url_in: ShortUrlCreate) -> ShortUrl:
         short_url = ShortUrl(
