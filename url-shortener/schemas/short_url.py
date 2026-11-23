@@ -51,6 +51,7 @@ class ShortUrlRead(ShortUrlBase):
     """
 
     slug: str
+    visits: int
 
 
 class ShortUrl(ShortUrlBase):
@@ -59,4 +60,4 @@ class ShortUrl(ShortUrlBase):
     """
 
     slug: str
-    visits: int = 42
+    visits: int = 0

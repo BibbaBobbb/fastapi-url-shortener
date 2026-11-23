@@ -56,6 +56,10 @@ class ShortUrlsStorage(BaseModel):
     def get_by_slug(self, slug: str) -> ShortUrl | None:
         return self.slug_to_short_url.get(slug)
 
+    def increment_visits(self, short_url: ShortUrl) -> None:
+        short_url.visits += 1
+        log.info("Short url %r visited %d times", short_url.slug, short_url.visits)
+
     def create(self, short_url_in: ShortUrlCreate) -> ShortUrl:
         short_url = ShortUrl(
             **short_url_in.model_dump(),
