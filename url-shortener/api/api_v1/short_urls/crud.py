@@ -44,7 +44,7 @@ class ShortUrlsStorage(BaseModel):
             data = ShortUrlsStorage.from_state()
         except ValidationError:
             self.save_state()
-            log.info("Recovered data from storage file.")
+            log.warning("Rewritten storage file due to validation error.")
             return
 
         # мы обновляем свойство напрямую
@@ -53,7 +53,7 @@ class ShortUrlsStorage(BaseModel):
         self.slug_to_short_url.update(
             data.slug_to_short_url,
         )
-        log.warning("Recovered data from storage file.")
+        log.info("Recovered data from storage file.")
 
     def get(self) -> list[ShortUrl]:
         return list(self.slug_to_short_url.values())
@@ -81,6 +81,7 @@ class ShortUrlsStorage(BaseModel):
 
     def delete_by_slug(self, slug: str) -> None:
         self.slug_to_short_url.pop(slug, None)
+        log.info("Deleted short url %r", slug)
 
     def delete(self, short_url: ShortUrl) -> None:
         self.delete_by_slug(slug=short_url.slug)
