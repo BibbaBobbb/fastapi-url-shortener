@@ -8,3 +8,12 @@ dependencies = [
     "fastapi[standard]>=0.115.10",
     "redis>=8.2.0",
 ]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.2.0",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["url-shortener"]
+testpaths = ["url-shortener/tests"]
