@@ -6,11 +6,7 @@ services:
     ports:
       - "8000:8000"
     environment:
-      SHORT_URLS_STORAGE_FILEPATH: /data/short-urls.json
       REDIS_HOST: redis
-    volumes:
-      # Хранилище коротких ссылок сохраняется на хосте в ./data/short-urls.json
-      - ./data:/data
     depends_on:
       - redis
     restart: unless-stopped

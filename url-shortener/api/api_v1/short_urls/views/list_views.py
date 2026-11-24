@@ -1,11 +1,9 @@
 from fastapi import (
     APIRouter,
     status,
-    Depends,
     HTTPException,
 )
 
-from api.api_v1.short_urls.dependencies import save_storage_state
 from schemas.short_url import (
     ShortUrl,
     ShortUrlCreate,
@@ -17,7 +15,6 @@ from api.api_v1.short_urls.crud import storage
 router = APIRouter(
     prefix="/short-urls",
     tags=["Short URLs"],
-    dependencies=[Depends(save_storage_state)],
 )
 
 
@@ -39,7 +36,7 @@ def create_short_url(
 ) -> ShortUrl:
     if short_url_create.slug is None:
         short_url_create.slug = storage.generate_unique_slug()
-    elif storage.get_by_slug(short_url_create.slug):
+    elif storage.exists(short_url_create.slug):
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
             detail=f"Short URL with slug {short_url_create.slug!r} already exists",
